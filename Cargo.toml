@@ -1,0 +1,14 @@
+[package]
+name = "axer"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+inquire = "0.9.1"
+clap = "4.5.53"
+colored = "3.0.0"
+# PARA TOML
+serde = "1.0.228"
+handlebars = "6.3.2"
+
+
