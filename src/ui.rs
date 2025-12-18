@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 use std::io;
 use std::io::Error;
-use clap::builder::Str;
+
 use crate::template::{check_template, template_process, TomlTemplate, TomlTemplateError};
 use colored::Colorize;
 use inquire::{prompt_text, InquireError, Select};
