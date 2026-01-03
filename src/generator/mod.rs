@@ -1,10 +1,10 @@
 use crate::generator::PromptsLanguages::Node;
 use colored::Colorize;
 use std::collections::HashMap;
-use std::{env, fs, io};
+use std::{env, fs,};
 use std::io::Error;
-use std::path::Path;
 use fs_extra::dir::{copy, CopyOptions};
+use crate::replacer::ReplacerError;
 use crate::template::config_dir;
 
 mod nodejs;
@@ -13,18 +13,25 @@ mod nodejs;
 pub enum ErrorGenerator {
     Io(Error),
     FsError(fs_extra::error::Error),
-    LanguageError(String)
+    LanguageError(String),
+    ReplaceError(ReplacerError)
 }
 
 impl From<Error> for ErrorGenerator {
     fn from(value: Error) -> Self {
-        ErrorGenerator::Io(value)
+        Self::Io(value)
     }
 }
 
 impl From<fs_extra::error::Error> for ErrorGenerator {
     fn from(value: fs_extra::error::Error) -> Self {
-        ErrorGenerator::FsError(value)
+        Self::FsError(value)
+    }
+}
+
+impl From<ReplacerError> for ErrorGenerator {
+    fn from(value: ReplacerError) -> Self {
+        Self::ReplaceError(value)
     }
 }
 
@@ -59,17 +66,19 @@ impl PromptsLanguages {
     }
 }
 
-pub fn generator(language: &str, answers: HashMap<String, String>, template: &String) -> Result<(), ErrorGenerator> {
-    let target_copy = env::current_dir()?;
+pub fn generator(language: &str, answers: HashMap<String, String>, template: &String, template_anwers: HashMap<String,String>) -> Result<(), ErrorGenerator> {
+    let mut target_copy = env::current_dir()?;
     let mut options_copy = CopyOptions::new();
     options_copy.copy_inside = true;
-    let algo = config_dir().join(template);
     copy(config_dir().join(template), &target_copy, &options_copy)?;
-    fs::remove_file(target_copy.join(template).join("template.toml"))?;
+    target_copy = target_copy.join(template);
+    fs::remove_file(target_copy.join("template.toml"))?;
     match language {
-        "nodejs" => nodejs::setup_node(&answers, template),
+        "nodejs" => {
+            nodejs::setup_node(&answers, template, template_anwers, target_copy)},
         _ => Err(ErrorGenerator::LanguageError("Language not selected or not exist".red().to_string())),
     }
+
 }
 
 pub fn prompt_from_language(language: &str) -> Result<Vec<Prompt>, String> {
