@@ -37,6 +37,14 @@ Las plantillas son **opinionadas pero no restrictivas** - proporcionan convencio
 
 ## 📦 Instalación
 
+### Desde crates.io (Recomendado)
+
+```bash
+cargo install axer
+```
+
+Esto descargará, compilará e instalará Axer en tu sistema. Funciona en Linux, macOS y Windows.
+
 ### Requisitos
 
 - [Rust 1.70+](https://www.rust-lang.org/tools/install)
@@ -266,9 +274,11 @@ MIT License - Copyright (c) 2026 Arekkazu
 
 <img width="500" height="500" alt="Axer Logo" src="https://github.com/user-attachments/assets/9e5449f6-e5f8-4671-8274-4eedb3efd1b7" />
 
+[![Crates.io](https://img.shields.io/crates/v/axer.svg)](https://crates.io/crates/axer)
+[![Downloads](https://img.shields.io/crates/d/axer.svg)](https://crates.io/crates/axer)
+[![Documentation](https://docs.rs/axer/badge.svg)](https://docs.rs/axer)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Rust](https://img.shields.io/badge/Rust-1.70%2B-orange.svg)](https://www.rust-lang.org/)
-[![Version](https://img.shields.io/badge/version-0.1.0-blue.svg)](https://github.com/Arekkazu/axer)
 
 [English](../README.md) | [Español](README_ES.md)
 
